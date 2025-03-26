@@ -41,7 +41,13 @@ func NewUserHandler(ser business.UserService) *UserHandler {
 // @Router /login [post]
 func (h *UserHandler) Login(ctx *gin.Context) {
     
-    log.Info("Logging configuration initialized")
+    log.WithFields(log.Fields{
+        "handler":  "UserHandler",
+        "endpoint": "Login",
+        "method":   ctx.Request.Method,
+        "clientIP": ctx.ClientIP(),
+    }).Info("Login request received")
+
     var LoginRequest common.LoginRequest
 
     if err := ctx.ShouldBindJSON(&LoginRequest); err != nil {
@@ -52,10 +58,25 @@ func (h *UserHandler) Login(ctx *gin.Context) {
     user, err := h.service.Login(LoginRequest.Username, LoginRequest.Password)
     if err != nil {
         if err.Error() == "user not found" {
+            log.WithFields(log.Fields{
+                "username": LoginRequest.Username,
+                "status":   http.StatusNotFound,
+            }).Warn("Login failed - user not found")
             ctx.JSON(http.StatusNotFound, common.NewErrorResponse("user not found"))
+
         } else if err.Error() == "invalid password" {
-            ctx.JSON(http.StatusUnauthorized,common.NewErrorResponse("invalid password"))
+            log.WithFields(log.Fields{
+                "username": LoginRequest.Username,
+                "status":   http.StatusBadRequest,
+            }).Warn("Login failed - invalid password")
+            ctx.JSON(http.StatusInternalServerError,common.NewErrorResponse("invalid password"))
+
         } else {
+            log.WithFields(log.Fields{
+                "error":       err.Error(),
+                "stack_trace": string(debug.Stack()),
+                "status":      http.StatusInternalServerError,
+            }).Error("Login processing error")
             ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse("login failed"))
         }
         return
@@ -63,10 +84,22 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 
     token, err := common.GenerateToken(user.UserID)
     if err != nil {
+        log.WithFields(log.Fields{
+            "user_id":    user.UserID,
+            "error":      err.Error(),
+            "stack_trace": string(debug.Stack()),
+            "status":     http.StatusInternalServerError,
+        }).Error("Failed to generate JWT token")
+
         ctx.JSON(http.StatusInternalServerError,common.NewErrorResponse("failed to generate token"))
         return
     }
 
+    log.WithFields(log.Fields{
+        "user_id":  user.UserID,
+        "username": user.UserName,
+        "status":   http.StatusOK,
+    }).Info("Login successful")
     ctx.JSON(http.StatusOK, common.NewLoginResponse("Login success", token))
 }
 
@@ -82,18 +115,41 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 // @Failure 500 {object} common.ErrorResponse
 // @Router /register [post]
 func(h *UserHandler) Register(ctx *gin.Context) {
+    log.WithFields(log.Fields{
+        "handler":  "UserHandler",
+        "endpoint": "Register",
+        "method":   ctx.Request.Method,
+        "path":     ctx.FullPath(),
+        "client":   ctx.ClientIP(),
+    }).Info("Request received")
 	var user models.User
 
 	if err := ctx.ShouldBindJSON(&user); err != nil{
+        log.WithFields(log.Fields{
+            "error":       err.Error(),
+            "parameters":  ctx.Request.URL.Query(),
+            "status_code": http.StatusBadRequest,
+        }).Warn("Invalid paging parameters")
+
 		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("invalid request"))
         return
 	}
 
 	if err := h.service.Register(&user); err != nil {
+        log.WithFields(log.Fields{
+            "error":       err.Error(),
+            "stack_trace": string(debug.Stack()),
+            "status_code": http.StatusInternalServerError,
+        }).Error("Registration failed")
 		ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse(err.Error()))
 		return
 	}
 
+    log.WithFields(log.Fields{
+        "user_id":  user.UserID,
+        "username": user.UserName,
+        "status":   http.StatusOK,
+    }).Info("User registered successfully")
 	ctx.JSON(http.StatusOK, common.NewResponse(user))
 }
 
@@ -152,3 +208,4 @@ func(h *UserHandler) ListUser(ctx *gin.Context) {
     }).Info("Successfully processed request")
     ctx.JSON(http.StatusOK, common.NewDetailResponse(result, paging))
 }
+

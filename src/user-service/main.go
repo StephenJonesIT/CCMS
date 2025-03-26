@@ -56,6 +56,11 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 			{
 				userGroup.GET("",middleware.RBACMiddleware("Quản lý người dùng"), h.ListUser)
 			}
+
+			profileGroup := authGroup.Group("/profiles")
+			{
+				profileGroup.GET("",h.ListProfile)
+			}
 	}
 	
 
