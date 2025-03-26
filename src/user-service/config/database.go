@@ -1,3 +1,8 @@
+/*
+ * @File: config.database.go
+ * @Description: Defines database information of the service
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package config
 
 import (

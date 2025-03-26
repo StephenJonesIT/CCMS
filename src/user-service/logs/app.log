@@ -1,0 +1,13 @@
+[36mINFO[0m[2025-03-26T20:37:46+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T20:39:42+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T20:44:10+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T20:47:53+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:14:01+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:16:23+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:25:09+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:26:20+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:31:17+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:38:21+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:57:27+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-26T21:57:34+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
+[36mINFO[0m[2025-03-26T21:57:34+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=5 [36mtotal_records[0m=5

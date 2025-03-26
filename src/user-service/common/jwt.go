@@ -1,9 +1,16 @@
+/*
+ * @File: common.jwt.go
+ * @Description: Defines jwt information of the service
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package common
 
 import (
 	"errors"
 	"fmt"
+	"os"
 	"time"
+
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 )
@@ -14,14 +21,14 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-var jwtSecret = []byte("your-secret-key") // Should be from config
+var jwtSecret = []byte(os.Getenv("YOUR_SECRET_KEY")) // Should be from config
 
 // GenerateToken creates a new JWT token
 func GenerateToken(userID uuid.UUID) (string, error) {
 	claims := &Claims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), // 1 day expiry
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), 
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 		},

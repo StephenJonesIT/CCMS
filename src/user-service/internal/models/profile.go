@@ -1,3 +1,8 @@
+/*
+ * @File: models.profile.go
+ * @Description: Defines Profile information will be returned to the clients
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package models
 
 import "github.com/google/uuid"

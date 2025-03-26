@@ -1,3 +1,8 @@
+/*
+ * @File: models.permission.go
+ * @Description: Defines Permission information will be returned to the clients
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package models
 
 type Permission struct {

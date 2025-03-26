@@ -1,7 +1,13 @@
+/*
+ * @File: bussiness.user_service.go
+ * @Description: Implements User business functions
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package business
 
 import (
 	"errors"
+	"user-service/common"
 	"user-service/internal/models"
 	"user-service/internal/repository"
 
@@ -12,8 +18,13 @@ type UserService interface {
 	Login(username, password string) (*models.User, error)
 	Register(user *models.User) error
 	HasPermission(userID uuid.UUID, permissionName string) bool
-	GetUserProfile(userID uuid.UUID) (*models.User, error)
-	UpdateUserProfile(user *models.User) error
+	GetUser(userID uuid.UUID) (*models.User, error)
+	GetListUser(paging *common.Paging) ([]models.User, error)
+
+	CreateProfile(profile *models.Profile) error
+	UpdateProfile(profile *models.Profile) error
+	GetProfile(idUser string) (*models.Profile, error)
+	GetListProfile(paging *common.Paging) ([]models.Profile, error)
 }
 
 type UserServiceImpl struct {
@@ -51,11 +62,9 @@ func (s *UserServiceImpl) Register(user *models.User) error {
 		return errors.New("password must be at least 8 characters")
 	}
 
-	// Set default role if not provided (e.g., regular user role)
 	if user.RoleID == 0 {
-		user.RoleID = 1 // Assuming 1 is the default user role
+		user.RoleID = 1 // Giá trị mặc định
 	}
-
 	return s.Repo.Register(user)
 }
 
@@ -65,17 +74,16 @@ func (s *UserServiceImpl) HasPermission(userID uuid.UUID, permissionName string)
 }
 
 // GetUserProfile retrieves user profile (without sensitive data)
-func (s *UserServiceImpl) GetUserProfile(userID uuid.UUID) (*models.Profile, error) {
-	profile, err := s.Repo.GetUserByID(userID)
+func (s *UserServiceImpl) GetUser(userID uuid.UUID) (*models.User, error) {
+	user, err := s.Repo.GetUserByID(userID)
 	if err != nil {
 		return nil, err
 	}
 
-	return profile, nil
+	return user, nil
 }
 
-// UpdateUserProfile updates user information
-func (s *UserServiceImpl) UpdateUserProfile(profile *models.Profile) error {
-	// Add any business logic/validation here before updating
-	return s.Repo.UpdateProfile(profile)
+func (s *UserServiceImpl) GetListUser(paging *common.Paging) ([]models.User, error){
+	paging.Process()
+	return s.Repo.GetListUser(paging)
 }

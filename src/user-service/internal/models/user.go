@@ -1,3 +1,8 @@
+/*
+ * @File: models.user.go
+ * @Description: Defines User information will be returned to the clients
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package models
 import "github.com/google/uuid"
 type User struct {
@@ -5,7 +10,7 @@ type User struct {
 	UserName 	string 		`json:"username" gorm:"column:username"`
 	Password 	string		`json:"password" gorm:"column:password"`
 	RoleID 		uint		`json:"role_id,omitempty" gorm:"column:role_id"` 
-	Role 		Role		
+	Role 		Role		`gorm:"foreignKey:RoleID;references:RoleID" json:"Role,omitempty"`
 }
 
 func(User) TableName() string {

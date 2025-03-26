@@ -1,3 +1,8 @@
+/*
+ * @File: common.bcrypt.go
+ * @Description: Defines bcrypt information of the service
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
 package common
 
 import "golang.org/x/crypto/bcrypt"

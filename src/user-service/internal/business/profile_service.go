@@ -1,0 +1,98 @@
+/*
+ * @File: bussiness.profile_service.go
+ * @Description: Implements Profile business functions
+ * @Author: Tran Thanh Sang (tranthanhsang.it.la@gmail.com)
+ */
+package business
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+	"user-service/common"
+	"user-service/internal/models"
+	"user-service/internal/repository"
+
+	"github.com/google/uuid"
+)
+
+func (s *UserServiceImpl) CreateProfile(profile *models.Profile) error {
+	if profile.FullName == "" {
+		return errors.New("fullname is required")
+	}
+
+	if profile.UserID == uuid.Nil {
+        return errors.New("user ID is required")
+    }
+
+	existing, err := s.Repo.GetProfile(profile.UserID.String())
+	if err != nil && !errors.Is(err, repository.ErrNotFound) {
+		return fmt.Errorf("error checking existing profile: %w", err)
+	}
+
+	if existing != nil {
+		return errors.New("profile already exists for this user")
+	}
+
+	if err := s.Repo.CreateProfile(profile); err != nil{
+		return fmt.Errorf("failed to create profile: %w", err)
+	}
+
+	return nil
+}
+
+func (s *UserServiceImpl) UpdateProfile(profile *models.Profile) error {
+	if profile == nil {
+        return errors.New("profile cannot be nil")
+    }
+    
+    if profile.UserID == uuid.Nil {
+        return errors.New("user ID is required")
+    }
+
+  	// Check if profile exists
+    if _, err := s.Repo.GetProfile(profile.UserID.String()); err != nil {
+        if errors.Is(err, repository.ErrNotFound) {
+            return fmt.Errorf("profile not found for user %s: %w", profile.UserID, err)
+        }
+        return fmt.Errorf("error checking existing profile: %w", err)
+    }
+
+	// Update profile in repository
+	if  err := s.Repo.UpdateProfile(profile); err != nil{
+		return fmt.Errorf("failed to update profile: %w",err)
+	}
+
+	return nil
+}
+
+func (s *UserServiceImpl) GetProfile(idUSer string) (*models.Profile, error) {
+	if strings.TrimSpace(idUSer) == "" {
+		return nil, fmt.Errorf("invalid input for %s: %s", "userID", "cannot be empty")
+	}
+
+	userUUID, err := uuid.Parse(idUSer);
+	if  err != nil  {
+		return nil, fmt.Errorf("invalid input for %s: %s", "userID", "invalid UUID format")
+	}
+
+	// Get profile
+    profile, err := s.Repo.GetProfile(userUUID.String())
+    if err != nil {
+        if errors.Is(err, repository.ErrNotFound) {
+            return nil, fmt.Errorf("profile not found for user %v", userUUID)
+        }
+        return nil, fmt.Errorf("repository error: %w", err)
+    }
+
+    if profile == nil {
+        return nil, errors.New("data integrity error: nil profile returned")
+    }
+
+    return profile, nil
+}
+
+func(s *UserServiceImpl) GetListProfile(paging *common.Paging) ([]models.Profile, error) {
+	paging.Process()
+	return s.Repo.GetListProfile(paging)
+}
