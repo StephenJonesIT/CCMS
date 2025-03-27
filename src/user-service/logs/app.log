@@ -11,3 +11,40 @@
 [36mINFO[0m[2025-03-26T21:57:27+07:00] Logging configuration initialized            
 [36mINFO[0m[2025-03-26T21:57:34+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
 [36mINFO[0m[2025-03-26T21:57:34+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=5 [36mtotal_records[0m=5
+[36mINFO[0m[2025-03-27T00:15:08+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T00:18:39+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-03-27T00:18:39+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-03-27T00:19:02+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListProfile [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-03-27T00:19:02+07:00] Successfully processed request                [36mreturned_records[0m=0 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=0
+[36mINFO[0m[2025-03-27T12:13:32+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:44:25+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:46:12+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:49:09+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:49:46+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-03-27T13:49:46+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=0ecbabcf-4e06-492a-8b15-7f909c910c6c [36musername[0m=user1
+[36mINFO[0m[2025-03-27T13:50:29+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T13:50:29+07:00] Failed to save profile to database            [31merror[0m="error checking existing profile: record not found"
+[36mINFO[0m[2025-03-27T13:52:00+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-03-27T13:52:00+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-03-27T13:52:22+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
+[36mINFO[0m[2025-03-27T13:52:22+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=5
+[36mINFO[0m[2025-03-27T13:52:43+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T13:52:43+07:00] Failed to save profile to database            [31merror[0m="error checking existing profile: record not found"
+[36mINFO[0m[2025-03-27T13:53:32+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T13:53:32+07:00] Failed to save profile to database            [31merror[0m="error checking existing profile: record not found"
+[36mINFO[0m[2025-03-27T13:54:43+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:54:48+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T13:54:48+07:00] Failed to save profile to database            [31merror[0m="error checking existing profile: record not found"
+[36mINFO[0m[2025-03-27T13:59:00+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T13:59:06+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T13:59:06+07:00] Failed to save profile to database            [31merror[0m="error checking existing profile: record not found"
+[36mINFO[0m[2025-03-27T14:12:04+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T14:12:10+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-03-27T14:12:10+07:00] Profile created successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=logo_branch_default.jpg [36mprofile_id[0m=12345
+[36mINFO[0m[2025-03-27T14:14:03+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T14:21:23+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T14:27:42+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T14:29:17+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[31mERRO[0m[2025-03-27T14:29:17+07:00] Failed to save profile to database            [31merror[0m="profile already exists for this user"
+[36mINFO[0m[2025-03-27T14:29:34+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-03-27T14:29:34+07:00] Profile created successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=profile_20250327_142934.png [36mprofile_id[0m=1

@@ -50,3 +50,17 @@ func (repo *UserRepoImpl)GetListProfile(paging *common.Paging) ([]models.Profile
     }
 	return profiles, nil
 }
+
+func (repo *UserRepoImpl) GetProfileUpdate(idUser string, idProfile int64) (*models.Profile, error){
+	var profile models.Profile
+	err := repo.DB.Table(models.Profile{}.TableName()).
+					Where("user_id = ? AND profile_id = ?", idUser, idProfile).
+					First(&profile).
+					Error
+	
+	if err != nil {
+		return nil, err
+	}
+
+	return &profile, nil
+}

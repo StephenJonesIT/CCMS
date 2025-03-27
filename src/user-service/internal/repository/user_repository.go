@@ -15,10 +15,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	ErrNotFound = errors.New("record not found")
-	// Other repository errors...
-)
 
 type UserRepository interface {
 	Login(username, password string) (*models.User, error)
@@ -31,6 +27,7 @@ type UserRepository interface {
 	CreateProfile(profile *models.Profile) error
 	GetProfile(idUser string) (*models.Profile, error)
     GetListProfile(paging *common.Paging) ([]models.Profile, error)
+	GetProfileUpdate(idUser string, idProfile int64) (*models.Profile, error)
 }
 
 type UserRepoImpl struct {

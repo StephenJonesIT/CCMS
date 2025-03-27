@@ -10,11 +10,11 @@ import (
 	"user-service/common"
 	"user-service/config"
 	_ "user-service/docs"
-	"user-service/internal/business"
+
 	"user-service/internal/handlers"
 	"user-service/internal/middleware"
 	"user-service/internal/repository"
-
+	"user-service/internal/business"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -47,6 +47,7 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 
 	v1 := m.router.Group("/api/v1")
 	{
+			v1.Static("/uploads", "./uploads")
 			v1.POST("/login", h.Login)
 			v1.POST("/register", h.Register)
 
@@ -59,7 +60,9 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 
 			profileGroup := authGroup.Group("/profiles")
 			{
-				profileGroup.GET("",h.ListProfile)
+				profileGroup.GET("",middleware.RBACMiddleware("Quản lý người dùng"),h.ListProfile)
+				profileGroup.POST("", h.CreateProfile)
+				profileGroup.PUT(":id_profile", h.UpdateProfile)
 			}
 	}
 	

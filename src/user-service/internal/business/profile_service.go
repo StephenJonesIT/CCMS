@@ -11,9 +11,8 @@ import (
 	"strings"
 	"user-service/common"
 	"user-service/internal/models"
-	"user-service/internal/repository"
-
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 func (s *UserServiceImpl) CreateProfile(profile *models.Profile) error {
@@ -26,7 +25,7 @@ func (s *UserServiceImpl) CreateProfile(profile *models.Profile) error {
     }
 
 	existing, err := s.Repo.GetProfile(profile.UserID.String())
-	if err != nil && !errors.Is(err, repository.ErrNotFound) {
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return fmt.Errorf("error checking existing profile: %w", err)
 	}
 
@@ -50,9 +49,13 @@ func (s *UserServiceImpl) UpdateProfile(profile *models.Profile) error {
         return errors.New("user ID is required")
     }
 
+	if profile.ProfileID == 0 {
+		return errors.New("profile id is required")
+	}
+
   	// Check if profile exists
-    if _, err := s.Repo.GetProfile(profile.UserID.String()); err != nil {
-        if errors.Is(err, repository.ErrNotFound) {
+    if _, err := s.Repo.GetProfileUpdate(profile.UserID.String(), profile.ProfileID); err != nil {
+        if errors.Is(err, gorm.ErrRecordNotFound) {
             return fmt.Errorf("profile not found for user %s: %w", profile.UserID, err)
         }
         return fmt.Errorf("error checking existing profile: %w", err)
@@ -79,7 +82,7 @@ func (s *UserServiceImpl) GetProfile(idUSer string) (*models.Profile, error) {
 	// Get profile
     profile, err := s.Repo.GetProfile(userUUID.String())
     if err != nil {
-        if errors.Is(err, repository.ErrNotFound) {
+        if errors.Is(err, gorm.ErrRecordNotFound) {
             return nil, fmt.Errorf("profile not found for user %v", userUUID)
         }
         return nil, fmt.Errorf("repository error: %w", err)

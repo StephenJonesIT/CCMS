@@ -5,9 +5,22 @@
  */
 package common
 
+
 type Response struct {
 	Data 	interface{} `json:"data"`
 	Paging 	interface{}	`json:"paging,omitempty"` 
+}
+
+type CreateOrUpdate struct {
+	Message  interface{} `json:"message"`
+	Data 	 interface{} `json:"data"`
+}
+
+func NewCreateOrUpdate (message, data interface{}) *CreateOrUpdate{
+	return &CreateOrUpdate{
+		Message: message,
+		Data: data,
+	}
 }
 
 func NewResponse(data interface{}) *Response {

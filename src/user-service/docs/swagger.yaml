@@ -138,6 +138,95 @@ paths:
       summary: Get list of profiles
       tags:
       - profiles
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create user profile with image upload and profile data
+      parameters:
+      - description: Profile image file (max 5MB)
+        in: formData
+        name: image
+        required: true
+        type: file
+      - description: Profile data in JSON format
+        in: formData
+        name: profile
+        required: true
+        type: string
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created profile
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "413":
+          description: File too large
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Create a new user profile
+      tags:
+      - profiles
+  /profiles/{id_profile}:
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update user profile with image upload and profile data
+      parameters:
+      - description: Profile ID
+        in: path
+        name: id_profile
+        required: true
+        type: integer
+      - description: New profile image file (max 5MB)
+        in: formData
+        name: image
+        type: file
+      - description: Profile data in JSON format
+        in: formData
+        name: profile
+        required: true
+        type: string
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated profile
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "413":
+          description: File too large
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Update user profile
+      tags:
+      - profiles
   /register:
     post:
       consumes:
