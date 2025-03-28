@@ -89,3 +89,7 @@
 [36mINFO[0m[2025-03-27T23:49:21+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=5
 [36mINFO[0m[2025-03-28T17:11:59+07:00] Logging configuration initialized            
 [36mINFO[0m[2025-03-28T17:11:59+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-28T17:24:13+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-28T17:24:13+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-28T17:24:13+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-28T17:24:13+07:00] Starting HTTP server on :9000                
