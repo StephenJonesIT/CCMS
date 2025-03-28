@@ -2,16 +2,15 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 	"path/filepath"
 	"runtime/debug"
 	"strconv"
 	"strings"
-	"time"
-	"user-service/common"
-	"user-service/internal/models"
 
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -95,43 +94,26 @@ func (h *UserHandler) CreateProfile(ctx *gin.Context) {
 		"client":   ctx.ClientIP(),
 	}).Info("Request received")
 
-	file, err := ctx.FormFile("image")
-	if err != nil {
-		log.WithError(err).Warn("Failed to get uploaded file")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("Invalid file upload"))
-		return
-	}
-
-	// Validate file size (5MB limit)
-	if file.Size > 5<<20 {
-		log.Warn("File size exceeds limit")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("File size exceeds the limit of 5MB"))
-		return
-	}
-
-	// Validate file etx .png or .jpg
-	fileExt := filepath.Ext(file.Filename)
-	allowedExts := map[string]bool{
-		".jpg":  true,
-		".jpeg": true,
-		".png":  true,
-	}
-
-	if !allowedExts[strings.ToLower(fileExt)] {
-		log.Warn("Invalid file format: only .jpg, .jpeg, or .png are allowed")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("Chỉ chấp nhận file ảnh .jpg, .jpeg hoặc .png"))
-		return
-	}
-
-	//General name file 
-	nameWithoutExt := strings.TrimSuffix(filepath.Base(file.Filename), filepath.Ext(fileExt))
-	filename := fmt.Sprintf("%s_%s%s",nameWithoutExt ,time.Now().Format("20060102_150405"), fileExt)
-	savePath := filepath.Join("./uploads", filename)
-	if err := ctx.SaveUploadedFile(file, savePath); err != nil {
-		log.WithError(err).Error("Failed to save uploaded file")
-		ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse("Failed to save profile image"))
-		return
-	}
+	filename, err := common.HandleFileUpload(ctx, "image", "./uploads")
+    if err != nil {
+        switch {
+        case errors.Is(err, http.ErrMissingFile):
+            // File not provided is acceptable for update
+        case strings.Contains(err.Error(), "file size exceeds"):
+            log.Warn(err.Error())
+            ctx.JSON(http.StatusBadRequest, common.NewErrorResponse(err.Error()))
+            return
+        case strings.Contains(err.Error(), "only .jpg, .jpeg or .png"):
+            log.Warn(err.Error())
+            ctx.JSON(http.StatusBadRequest, common.NewErrorResponse(err.Error()))
+            return
+        default:
+            log.WithError(err).Error("File upload error")
+            ctx.JSON(http.StatusInternalServerError, 
+                common.NewErrorResponse("Failed to process uploaded file"))
+            return
+        }
+    }
 
 	profileJSON := ctx.PostForm("profile")
 	if profileJSON == "" {
@@ -193,43 +175,26 @@ func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
 		return
 	}
 
-	file, err := ctx.FormFile("image")
-	if err != nil {
-		log.WithError(err).Warn("Failed to get uploaded file")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("Invalid file upload"))
-		return
-	}
-
-	// Validate file size (5MB limit)
-	if file.Size > 5<<20 {
-		log.Warn("File size exceeds limit")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("File size exceeds the limit of 5MB"))
-		return
-	}
-
-	// Validate file etx .png or .jpg
-	fileExt := filepath.Ext(file.Filename)
-	allowedExts := map[string]bool{
-		".jpg":  true,
-		".jpeg": true,
-		".png":  true,
-	}
-
-	if !allowedExts[strings.ToLower(fileExt)] {
-		log.Warn("Invalid file format: only .jpg, .jpeg, or .png are allowed")
-		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("Chỉ chấp nhận file ảnh .jpg, .jpeg hoặc .png"))
-		return
-	}
-
-	//General name file 
-	nameWithoutExt := strings.TrimSuffix(filepath.Base(file.Filename), filepath.Ext(fileExt))
-	filename := fmt.Sprintf("%s_%s%s",nameWithoutExt ,time.Now().Format("20060102_150405"), fileExt)
-	savePath := filepath.Join("./uploads", filename)
-	if err := ctx.SaveUploadedFile(file, savePath); err != nil {
-		log.WithError(err).Error("Failed to save uploaded file")
-		ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse("Failed to save profile image"))
-		return
-	}
+	filename, err := common.HandleFileUpload(ctx, "image", "./uploads")
+    if err != nil {
+        switch {
+        case errors.Is(err, http.ErrMissingFile):
+            // File not provided is acceptable for update
+        case strings.Contains(err.Error(), "file size exceeds"):
+            log.Warn(err.Error())
+            ctx.JSON(http.StatusBadRequest, common.NewErrorResponse(err.Error()))
+            return
+        case strings.Contains(err.Error(), "only .jpg, .jpeg or .png"):
+            log.Warn(err.Error())
+            ctx.JSON(http.StatusBadRequest, common.NewErrorResponse(err.Error()))
+            return
+        default:
+            log.WithError(err).Error("File upload error")
+            ctx.JSON(http.StatusInternalServerError, 
+                common.NewErrorResponse("Failed to process uploaded file"))
+            return
+        }
+    }
 
 	profileJSON := ctx.PostForm("profile")
 	if profileJSON == "" {
@@ -245,11 +210,17 @@ func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
         return
     }
 
-	if err := common.DeleteFile(profile.Picture_URL); err != nil {
-		log.WithError(err).Error("Failed to remove file with path")
-	}
+	// If file was uploaded, update profile picture URL
+    if filename != "" {
+        // Delete old picture if exists
+        if profile.Picture_URL != "" {
+            if err := common.DeleteFile(filepath.Base(profile.Picture_URL)); err != nil {
+                log.WithError(err).Warn("Failed to delete old profile picture")
+            }
+        }
+        profile.Picture_URL = "/uploads/"+ filename
+    }
 
-	profile.Picture_URL = "/uploads/" + filename
 	profile.ProfileID = int64(idProfile)
 	if err := h.service.UpdateProfile(&profile); err != nil {
 		log.WithError(err).Error("Failed to save profile to database")
@@ -263,5 +234,4 @@ func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
 		"client_ip":  ctx.ClientIP(),
 	}).Info("Profile updated successfully")
 	ctx.JSON(http.StatusOK, common.NewCreateOrUpdate("Profile updated successfully", profile))
-
 }

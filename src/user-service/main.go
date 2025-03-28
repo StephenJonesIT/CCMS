@@ -6,28 +6,33 @@
 package main
 
 import (
+	"net"
+	"os"
 	"time"
-	"user-service/common"
-	"user-service/config"
-	_ "user-service/docs"
 
-	"user-service/internal/handlers"
-	"user-service/internal/middleware"
-	"user-service/internal/repository"
-	"user-service/internal/business"
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/config"
+	_"github.com/StephenJonesIT/CCMS/src/user-service/docs"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/business"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/handlers"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/middleware"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/repository"
+	pb "github.com/StephenJonesIT/CCMS/src/user-service/proto"
+	"github.com/StephenJonesIT/CCMS/src/user-service/service"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"google.golang.org/grpc"
 )
 
 type Main struct {
 	router *gin.Engine
 }
 
-func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
+func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) error{
 	m.router = gin.Default()
 	m.router.Use(cors.New(cors.Config{
         AllowOrigins:     []string{"*"}, // For development only
@@ -50,6 +55,7 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 			v1.Static("/uploads", "./uploads")
 			v1.POST("/login", h.Login)
 			v1.POST("/register", h.Register)
+			v1.POST("/change-password", h.ChangePassword)
 
 			authGroup := v1.Group("")
 			authGroup.Use(middleware.AuthMiddleware(r))
@@ -67,7 +73,8 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 	}
 	
 
-	m.router.Run(config.Config.Port)
+	log.Infof("Starting HTTP server on %s", config.Config.Port)
+    return m.router.Run(config.Config.Port)
 }
  
 // @title UserManagement Service API Document
@@ -78,22 +85,67 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) {
 // @host 127.0.0.1:9000
 // @BasePath /api/v1
 // @schemes http https
-func main(){
-	m := Main{}
-	err := godotenv.Load(".env")
-    if err != nil {
-        log.Fatalf("Error loading .env file")
+func main() {
+    // 1. Khởi tạo logging
+    log.SetFormatter(&log.JSONFormatter{})
+    
+    // 2. Load config
+    if err := godotenv.Load(".env"); err != nil {
+        log.Warn("No .env file found, using environment variables")
     }
-	config.ConfigDatabase()
+    
+    if err := config.LoadConfig("config/config.json"); err != nil {
+        log.Fatalf("Failed to load configuration: %v", err)
+    }
+    
+    // 3. Khởi tạo database
+    config.ConfigDatabase()
+    
+    // 4. Khởi tạo Redis
+    common.InitRedis("localhost:6379", "", 0)
+    
+    // 5. Khởi tạo các dependency
+    repoUser := repository.NewUserRepository(config.DB)
+    serviceUser := business.NewUserService(repoUser)
+    handler := handlers.NewUserHandler(serviceUser)
+    
+    // 6. Tạo auth service TRƯỚC KHI sử dụng trong goroutine
+    authService := service.NewAuthService(
+        repoUser,
+        os.Getenv("JWT_SECRET_KEY"),
+        24*time.Hour,
+    )
+    
+    // 7. Tạo channels cho các server
+    httpErr := make(chan error)
+    grpcErr := make(chan error)
+    
+    // 8. Chạy HTTP server trong goroutine
+    go func() {
+        m := Main{}
+        log.Info("Starting HTTP server on ", config.Config.Port)
+        httpErr <- m.initServe(repoUser, handler)
+    }()
+    
+    // 9. Chạy gRPC server trong goroutine
+    go func(authService pb.AuthServiceServer) { // Truyền authService như parameter
+        lis, err := net.Listen("tcp", ":50051")
+        if err != nil {
+            grpcErr <- err
+            return
+        }
 
-	if err := config.LoadConfig("config/config.json"); err != nil {
-		log.Fatalf("Failed to load configuration: %v", err)
-	}
-
-	repoUser := repository.NewUserRepository(config.DB)
-	serviceUser := business.NewUserService(repoUser)
-	handler := handlers.NewUserHandler(serviceUser)
-	
-	common.InitRedis("localhost:6379", "", 0)
-	m.initServe(repoUser, handler)
+        grpcServer := grpc.NewServer()
+        pb.RegisterAuthServiceServer(grpcServer, authService)
+        log.Printf("gRPC auth server listening at %v", lis.Addr())
+        grpcErr <- grpcServer.Serve(lis)
+    }(authService) // Truyền authService vào goroutine
+    
+    // 10. Chờ lỗi từ một trong hai server
+    select {
+    case err := <-httpErr:
+        log.Fatalf("HTTP server failed: %v", err)
+    case err := <-grpcErr:
+        log.Fatalf("gRPC server failed: %v", err)
+    }
 }

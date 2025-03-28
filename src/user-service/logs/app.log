@@ -48,3 +48,44 @@
 [31mERRO[0m[2025-03-27T14:29:17+07:00] Failed to save profile to database            [31merror[0m="profile already exists for this user"
 [36mINFO[0m[2025-03-27T14:29:34+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreateProfile [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/profiles
 [36mINFO[0m[2025-03-27T14:29:34+07:00] Profile created successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=profile_20250327_142934.png [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T17:34:32+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T17:37:18+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T17:40:31+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[31mERRO[0m[2025-03-27T17:40:31+07:00] Failed to remove file with path               [31merror[0m="file does not exist: /uploads/logo_branch_default.jpg"
+[36mINFO[0m[2025-03-27T17:40:31+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=logo_car_defalut_20250327_174031.jpg [36mprofile_id[0m=12345
+[36mINFO[0m[2025-03-27T17:50:27+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T17:51:13+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T17:51:13+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=hinhb1_20250327_175113.png [36mprofile_id[0m=12345
+[36mINFO[0m[2025-03-27T18:28:54+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListProfile [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-03-27T18:28:54+07:00] Successfully processed request                [36mreturned_records[0m=2 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=2
+[36mINFO[0m[2025-03-27T18:29:57+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:29:57+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=hinhb1_20250327_182957.png [36mprofile_id[0m=12345
+[36mINFO[0m[2025-03-27T18:30:47+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T18:31:17+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:31:17+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=hinhb10_20250327_183117.png [36mprofile_id[0m=12345
+[36mINFO[0m[2025-03-27T18:32:17+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[31mERRO[0m[2025-03-27T18:32:17+07:00] Invalid profile JSON format                   [31merror[0m="invalid character ':' after top-level value"
+[36mINFO[0m[2025-03-27T18:33:31+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:33:31+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=hinhb1_20250327_183331.png [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T18:34:21+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListProfile [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-03-27T18:34:21+07:00] Successfully processed request                [36mreturned_records[0m=2 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=2
+[36mINFO[0m[2025-03-27T18:35:40+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:35:40+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=hinhb1_20250327_183540.png [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T18:36:15+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:36:15+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=employee_1_20250327_183615.jpg [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T18:40:51+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T18:40:51+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=employee_1_20250327_184051.jpg [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T19:37:11+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T19:38:09+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UpdateProfile [36mhandler[0m=UserHandler [36mmethod[0m=PUT [36mpath[0m="/api/v1/profiles/:id_profile"
+[36mINFO[0m[2025-03-27T19:38:09+07:00] Profile updated successfully                  [36mclient_ip[0m=127.0.0.1 [36mfile_name[0m=employee_4_20250327_193809.png [36mprofile_id[0m=1
+[36mINFO[0m[2025-03-27T23:38:59+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
+[36mINFO[0m[2025-03-27T23:38:59+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=5
+[36mINFO[0m[2025-03-27T23:44:26+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T23:45:44+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T23:45:53+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
+[36mINFO[0m[2025-03-27T23:45:53+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=5
+[36mINFO[0m[2025-03-27T23:49:15+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-27T23:49:21+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListUser [36mhandler[0m=UserHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/users
+[36mINFO[0m[2025-03-27T23:49:21+07:00] Successfully processed request                [36mreturned_records[0m=5 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=5
+[36mINFO[0m[2025-03-28T17:11:59+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-28T17:11:59+07:00] gRPC auth server listening at [::]:50051     

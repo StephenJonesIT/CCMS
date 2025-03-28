@@ -7,10 +7,10 @@ package business
 
 import (
 	"errors"
-	"user-service/common"
-	"user-service/internal/models"
-	"user-service/internal/repository"
 
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/repository"
 	"github.com/google/uuid"
 )
 
@@ -20,6 +20,7 @@ type UserService interface {
 	HasPermission(userID uuid.UUID, permissionName string) bool
 	GetUser(userID uuid.UUID) (*models.User, error)
 	GetListUser(paging *common.Paging) ([]models.User, error)
+	ChangePassword(username, password string) error
 
 	CreateProfile(profile *models.Profile) error
 	UpdateProfile(profile *models.Profile) error
@@ -87,3 +88,20 @@ func (s *UserServiceImpl) GetListUser(paging *common.Paging) ([]models.User, err
 	paging.Process()
 	return s.Repo.GetListUser(paging)
 }
+
+func (s *UserServiceImpl) ChangePassword(username, password string) error {
+	if username == "" {
+		return errors.New("username is required")
+	}
+
+	if password == "" {
+		return errors.New("password is required")
+	}
+
+	if len(password) < 8 {
+		return errors.New("password must be at least 8 characters")
+	}
+
+	return s.Repo.ChangePassword(username, password)
+}
+

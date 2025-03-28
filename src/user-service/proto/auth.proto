@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/StephenJonesIT/Comprehensive-Content-Management-System.git/user-service/proto";
+
+// Rest of your proto definitions...
+service AuthService {
+  rpc VerifyToken (TokenRequest) returns (TokenResponse);
+  rpc CheckPermission (PermissionRequest) returns (PermissionResponse);
+}
+
+message TokenRequest {
+  string token = 1;
+}
+
+message PermissionRequest {
+  string token = 1;
+  string resource = 2;  // "post", "comment", etc.
+  string action = 3;    // "create", "read", "update", "delete"
+}
+
+message TokenResponse {
+  string user_id = 1;
+  string role_name = 2;
+}
+
+message PermissionResponse {
+  bool allowed = 1;
+  string role_name = 2;
+}

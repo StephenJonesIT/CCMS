@@ -8,10 +8,10 @@ package handlers
 import (
 	"net/http"
 	"runtime/debug"
-	"user-service/common"
-	"user-service/internal/business"
-	"user-service/internal/models"
 
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/business"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -82,7 +82,7 @@ func (h *UserHandler) Login(ctx *gin.Context) {
         return
     }
 
-    token, err := common.GenerateToken(user.UserID)
+    token, err := common.GenerateToken(user.UserID, user.Role.RoleName)
     if err != nil {
         log.WithFields(log.Fields{
             "user_id":    user.UserID,
@@ -209,3 +209,75 @@ func(h *UserHandler) ListUser(ctx *gin.Context) {
     ctx.JSON(http.StatusOK, common.NewDetailResponse(result, paging))
 }
 
+// ChangePassword godoc
+// @Summary Change user password
+// @Description Change password for authenticated user (requires current password)
+// @Tags authentication
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param changePasswordRequest body common.LoginRequest true "Password change details"
+// @Success 200 {object} common.Response
+// @Failure 400 {object} common.ErrorResponse
+// @Failure 401 {object} common.ErrorResponse
+// @Failure 404 {object} common.ErrorResponse
+// @Failure 500 {object} common.ErrorResponse
+// @Router /change-password [post]
+func(h *UserHandler) ChangePassword(ctx *gin.Context) {
+    log.WithFields(log.Fields{
+        "handler":  "UserHandler",
+        "endpoint": "ChangePassword",
+        "method":   ctx.Request.Method,
+        "path":     ctx.FullPath(),
+        "client":   ctx.ClientIP(),
+    }).Info("Request received")
+
+    var request common.LoginRequest
+
+    if err := ctx.ShouldBindJSON(&request); err != nil {
+        log.WithFields(log.Fields{
+            "error":       err.Error(),
+            "parameters":  ctx.Request.URL.Query(),
+            "status_code": http.StatusBadRequest,
+        }).Warn("Invalid request parameters")
+    }
+
+    
+    if err := h.service.ChangePassword(request.Username, request.Password); err != nil {
+        switch err.Error() { // Compare error message strings
+        case "user not found":
+            log.WithFields(log.Fields{
+                "username": request.Username,
+                "status":   http.StatusNotFound,
+            }).Warn("ChangePassword failed - user not found")
+            ctx.JSON(http.StatusNotFound, common.NewErrorResponse("user not found"))
+        case "invalid password":
+            log.WithFields(log.Fields{
+                "username": request.Username,
+                "status":   http.StatusUnauthorized,
+            }).Warn("ChangePassword failed - invalid password")
+            ctx.JSON(http.StatusUnauthorized, common.NewErrorResponse("current password is incorrect"))
+        case "failed to hash password":
+            log.WithFields(log.Fields{
+                "username": request.Username,
+                "status":   http.StatusInternalServerError,
+                "error":    err.Error(),
+            }).Error("ChangePassword failed - password hashing error")
+            ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse("password processing failed"))
+        default:
+            log.WithFields(log.Fields{
+                "username": request.Username,
+                "status":   http.StatusInternalServerError,
+                "error":    err.Error(),
+            }).Error("ChangePassword failed - unexpected error")
+            ctx.JSON(http.StatusInternalServerError, common.NewErrorResponse("failed to change password"))
+        }
+        return
+    }
+
+    log.WithFields(log.Fields{
+        "username": request.Username,
+        "status":   http.StatusOK,
+    }).Info("ChangePassword successful")
+    ctx.JSON(http.StatusOK, gin.H{"message": "password changed successfully"})
+}

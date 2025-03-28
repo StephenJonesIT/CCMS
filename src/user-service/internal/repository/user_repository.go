@@ -8,9 +8,9 @@ package repository
 import (
 	"errors"
 	"fmt"
-	"user-service/common"
-	"user-service/internal/models"
 
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -22,6 +22,7 @@ type UserRepository interface {
 	HasPermission(userID uuid.UUID, permissionName string) bool
 	GetUserByID(userID uuid.UUID) (*models.User, error)
 	GetListUser(paging *common.Paging) ([]models.User, error)
+	ChangePassword(username, password string) error
 
 	UpdateProfile(profile *models.Profile) error
 	CreateProfile(profile *models.Profile) error
@@ -97,7 +98,7 @@ func (repo *UserRepoImpl) HasPermission(userID uuid.UUID, permissionName string)
 func (repo *UserRepoImpl) GetUserByID(userID uuid.UUID) (*models.User, error) {
 	var user models.User
 
-	if err := repo.DB.Table(models.User{}.TableName()).Where("user_id = ?", userID).First(&user).Error; err != nil {
+	if err := repo.DB.Table(models.User{}.TableName()).Preload("Role").Where("user_id = ?", userID).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -110,6 +111,7 @@ func (repo *UserRepoImpl) GetListUser(paging *common.Paging) ([]models.User, err
 	}
 
 	query := repo.DB.Table(models.User{}.TableName()).
+		Preload("Role").
 		Order("created_at DESC").
 		Offset((paging.Page - 1) * paging.Limit).
 		Limit(paging.Limit)
@@ -118,4 +120,48 @@ func (repo *UserRepoImpl) GetListUser(paging *common.Paging) ([]models.User, err
         return nil, fmt.Errorf("failed to get user list: %w", err)
     }
 	return users, nil
+}
+
+func (repo *UserRepoImpl) ChangePassword(username, newPassword string) error {
+    // 1. Start a transaction for atomic operation
+    tx := repo.DB.Begin()
+    defer func() {
+        if r := recover(); r != nil {
+            tx.Rollback()
+        }
+    }()
+
+    // 2. Find the user by username
+    var user models.User
+    if err := tx.Table(models.User{}.TableName()).
+        Where("username = ?", username).
+        First(&user).Error; err != nil {
+        tx.Rollback()
+        if errors.Is(err, gorm.ErrRecordNotFound) {
+            return fmt.Errorf("user not found")
+        }
+        return fmt.Errorf("database error: %w", err)
+    }
+
+    // 3. Hash the new password
+    hashedPassword, err := common.HassPassword(newPassword)
+    if err != nil {
+        tx.Rollback()
+        return fmt.Errorf("failed to hash password: %w", err)
+    }
+
+    // 4. Update the password
+    if err := tx.Table(models.User{}.TableName()).
+        Where("user_id = ?", user.UserID).
+        Update("password", hashedPassword).Error; err != nil {
+        tx.Rollback()
+        return fmt.Errorf("failed to update password: %w", err)
+    }
+
+    // 5. Commit the transaction
+    if err := tx.Commit().Error; err != nil {
+        return fmt.Errorf("failed to commit transaction: %w", err)
+    }
+
+    return nil
 }

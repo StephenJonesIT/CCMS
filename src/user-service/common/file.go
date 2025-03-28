@@ -17,23 +17,29 @@ import (
 // - no permission to delete
 // - path is a directory
 // - other OS-level errors
-func DeleteFile(filePath string) error {
-    // Check if file exists first
-    fileInfo, err := os.Stat(filePath)
-    if os.IsNotExist(err) {
-        return fmt.Errorf("file does not exist: %s", filePath)
-    }
-    
-    // Prevent accidental directory deletion
-    if fileInfo.IsDir() {
-        return fmt.Errorf("path is a directory, not a file: %s", filePath)
+// common/file.go
+func DeleteFile(nameFile string) error {
+    if nameFile == "" {
+        return nil // No file to delete is not an error
     }
 
-    // Attempt to remove the file
-    if err := os.Remove(filePath); err != nil {
-        return fmt.Errorf("failed to delete file: %w", err) // %w wraps the original error
+	fileUrl := filepath.Join("./uploads",nameFile)
+    fileInfo, err := os.Stat(fileUrl)
+    if os.IsNotExist(err) {
+        return nil // File doesn't exist is not an error
     }
-    
+    if err != nil {
+        return fmt.Errorf("failed to stat file: %w", err)
+    }
+
+    if fileInfo.IsDir() {
+        return fmt.Errorf("path is a directory: %s", fileUrl)
+    }
+
+    if err := os.Remove(fileUrl); err != nil {
+        return fmt.Errorf("failed to delete file: %w", err)
+    }
+
     return nil
 }
 

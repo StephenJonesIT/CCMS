@@ -38,10 +38,10 @@ definitions:
     type: object
   models.User:
     properties:
-      Role:
-        $ref: '#/definitions/models.Role'
       password:
         type: string
+      role:
+        $ref: '#/definitions/models.Role'
       role_id:
         type: integer
       user_id:
@@ -57,6 +57,46 @@ info:
   title: UserManagement Service API Document
   version: "1.0"
 paths:
+  /change-password:
+    post:
+      consumes:
+      - application/json
+      description: Change password for authenticated user (requires current password)
+      parameters:
+      - description: Password change details
+        in: body
+        name: changePasswordRequest
+        required: true
+        schema:
+          $ref: '#/definitions/common.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Change user password
+      tags:
+      - authentication
   /login:
     post:
       consumes:

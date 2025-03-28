@@ -9,8 +9,9 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"user-service/common"
-	"user-service/internal/models"
+
+	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

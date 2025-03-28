@@ -18,15 +18,17 @@ import (
 // JWT claims struct
 type Claims struct {
 	UserID uuid.UUID `json:"user_id"`
+	RoleName string  `json:"role_name"`
 	jwt.RegisteredClaims
 }
 
-var jwtSecret = []byte(os.Getenv("YOUR_SECRET_KEY")) // Should be from config
+var jwtSecret = []byte(os.Getenv("JWT_SECRET_KEY")) // Should be from config
 
 // GenerateToken creates a new JWT token
-func GenerateToken(userID uuid.UUID) (string, error) {
+func GenerateToken(userID uuid.UUID, roleName string) (string, error) {
 	claims := &Claims{
 		UserID: userID,
+		RoleName: roleName,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), 
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -39,7 +41,7 @@ func GenerateToken(userID uuid.UUID) (string, error) {
 }
 
 // VerifyToken verifies and parses a JWT token
-func VerifyToken(tokenString string) (uuid.UUID, error) {
+func VerifyToken(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		// Validate the signing method
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -49,12 +51,12 @@ func VerifyToken(tokenString string) (uuid.UUID, error) {
 	})
 
 	if err != nil {
-		return uuid.Nil, err
+		return nil, err
 	}
 
 	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-		return claims.UserID, nil
+		return claims, nil
 	}
 
-	return uuid.Nil, errors.New("invalid token")
+	return nil, errors.New("invalid token")
 }
