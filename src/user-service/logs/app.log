@@ -93,3 +93,11 @@
 [36mINFO[0m[2025-03-28T17:24:13+07:00] Starting HTTP server on :9000                
 [36mINFO[0m[2025-03-28T17:24:13+07:00] gRPC auth server listening at [::]:50051     
 [36mINFO[0m[2025-03-28T17:24:13+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T15:21:58+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T15:21:59+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T15:21:59+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T15:21:59+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:19:05+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T17:19:05+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:19:05+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T17:19:05+07:00] Starting HTTP server on :9000                

@@ -129,7 +129,7 @@ func(h *UserHandler) Register(ctx *gin.Context) {
             "error":       err.Error(),
             "parameters":  ctx.Request.URL.Query(),
             "status_code": http.StatusBadRequest,
-        }).Warn("Invalid paging parameters")
+        }).Warn("Invalid user parameters")
 
 		ctx.JSON(http.StatusBadRequest, common.NewErrorResponse("invalid request"))
         return

@@ -2,10 +2,8 @@ package service
 
 import (
 	"context"
-	"errors"
-	"fmt"
+	"errors"	
 	"time"
-
 	"github.com/StephenJonesIT/CCMS/src/user-service/common"
 	"github.com/StephenJonesIT/CCMS/src/user-service/internal/repository"
 	pb "github.com/StephenJonesIT/CCMS/src/user-service/proto"
@@ -57,7 +55,7 @@ func (s *AuthService) CheckPermission(ctx context.Context, req *pb.PermissionReq
     }
 
     // Check permission
-    requiredPermission := fmt.Sprintf("%s:%s", req.Resource, req.Action)
+    requiredPermission := req.Resource
     hasPerm := s.userRepo.HasPermission(claims.UserID, requiredPermission)
     
     return &pb.PermissionResponse{

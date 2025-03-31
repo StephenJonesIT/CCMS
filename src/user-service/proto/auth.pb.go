@@ -248,7 +248,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\trole_name\x18\x02 \x01(\tR\broleName2\x8b\x01\n" +
 	"\vAuthService\x126\n" +
 	"\vVerifyToken\x12\x12.auth.TokenRequest\x1a\x13.auth.TokenResponse\x12D\n" +
-	"\x0fCheckPermission\x12\x17.auth.PermissionRequest\x1a\x18.auth.PermissionResponseBZZXgithub.com/StephenJonesIT/CCMS/user-service/protob\x06proto3"
+	"\x0fCheckPermission\x12\x17.auth.PermissionRequest\x1a\x18.auth.PermissionResponseBZZXgithub.com/StephenJonesIT/Comprehensive-Content-Management-System.git/user-service/protob\x06proto3"
 
 var (
 	file_proto_auth_proto_rawDescOnce sync.Once
