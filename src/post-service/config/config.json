@@ -1,0 +1,11 @@
+{
+    "port": ":9100",
+    "environment": "development",
+    "enableConsoleLog": true,
+    "enableGinFileLog": true,
+    "logFileName": "logs/app.log",
+    "logMaxSize": 10,
+    "logMaxBackups": 5,
+    "logMaxAge": 30,
+    "logLevel": "debug"
+  }

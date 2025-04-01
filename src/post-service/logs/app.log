@@ -1,0 +1,67 @@
+[36mINFO[0m[2025-03-31T18:34:47+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T18:34:49+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T19:09:36+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T19:09:37+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T19:13:57+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T19:13:58+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T19:17:58+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T19:17:59+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T19:19:03+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T19:19:04+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T20:03:04+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/posts
+[36mINFO[0m[2025-03-31T20:27:26+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T20:27:27+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T20:27:37+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/posts
+[36mINFO[0m[2025-03-31T20:27:38+07:00] Post created successfully                     [36mparameter[0m="map[]" [36mstatus_code[0m=201
+[31mERRO[0m[2025-03-31T22:10:09+07:00] Invalid or expired token                      [31mclient[0m=127.0.0.1 [31mendpoint[0m=AuthMiddleware [31mhandler[0m=AuthMiddleware [31mmethod[0m=POST [31mpath[0m=/api/v1/posts
+[36mINFO[0m[2025-03-31T23:24:04+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:24:05+07:00] Connected to MongoDB                         
+[31mERRO[0m[2025-03-31T23:37:05+07:00] Invalid or expired token                      [31mclient[0m=127.0.0.1 [31mendpoint[0m=AuthMiddleware [31mhandler[0m=AuthMiddleware [31mmethod[0m=POST [31mpath[0m=/api/v1/posts
+[36mINFO[0m[2025-03-31T23:39:20+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/posts
+[36mINFO[0m[2025-03-31T23:39:20+07:00] Post created successfully                     [36mparameter[0m="map[]" [36mstatus_code[0m=201
+[36mINFO[0m[2025-03-31T23:46:32+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:46:33+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T23:47:11+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:47:12+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T23:49:52+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:49:53+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T23:50:31+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:50:32+07:00] Connected to MongoDB                         
+[31mERRO[0m[2025-03-31T23:51:08+07:00] Failed to get post by ID                      [31merror[0m="the provided hex string is not a valid ObjectID" [31mparameter[0m="map[id:[67eac538f8c58f0764c2c306]]" [31mstatus_code[0m=500
+[36mINFO[0m[2025-03-31T23:52:44+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T23:52:45+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-03-31T23:53:18+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T15:13:24+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T15:13:26+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T20:30:10+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:30:10+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T20:31:02+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:31:03+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T20:37:04+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:37:05+07:00] Connected to MongoDB                         
+[31mERRO[0m[2025-04-01T20:40:09+07:00] Failed to delete file                         [31merror[0m="encountered 1 errors during file deletion: failed to delete file: remove ./uploads/images/1743427657953460400.jpg: The system cannot find the file specified." [31mparameter[0m="map[]" [31mstatus_code[0m=500
+[36mINFO[0m[2025-04-01T20:43:46+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T20:50:08+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:50:09+07:00] Connected to MongoDB                         
+[31mERRO[0m[2025-04-01T20:50:17+07:00] Failed to delete file                         [31merror[0m="encountered 4 errors during file deletion: failed to delete file: remove ./uploads/images/1743427657953460400.jpg: The system cannot find the file specified.; failed to delete file: remove ./uploads/images/1743427657953460400.png: The system cannot find the file specified.; failed to delete file: remove ./uploads/images/1743427657953460400.jpg: The system cannot find the file specified.; failed to delete file: remove ./uploads/images/1743427657953460400.png: The system cannot find the file specified." [31mparameter[0m="map[]" [31mstatus_code[0m=500
+[36mINFO[0m[2025-04-01T20:52:52+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/user/posts
+[36mINFO[0m[2025-04-01T20:52:52+07:00] Post created successfully                     [36mparameter[0m="map[]" [36mstatus_code[0m=201
+[36mINFO[0m[2025-04-01T20:53:37+07:00] Post deleted successfully                     [36mstatus_code[0m=200
+[31mERRO[0m[2025-04-01T20:53:52+07:00] Failed to get post by ID                      [31merror[0m="mongo: no documents in result" [31mparameter[0m="map[]" [31mstatus_code[0m=500
+[36mINFO[0m[2025-04-01T20:55:36+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:55:37+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T20:55:46+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/user/posts
+[36mINFO[0m[2025-04-01T20:55:46+07:00] Post created successfully                     [36mparameter[0m="map[]" [36mstatus_code[0m=201
+[36mINFO[0m[2025-04-01T20:55:59+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T20:58:52+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:58:52+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T20:59:09+07:00] Post deleted successfully                     [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T21:00:01+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T21:00:01+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-01T21:00:10+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=CreatePost [36mhandler[0m=PostHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/user/posts
+[36mINFO[0m[2025-04-01T21:00:10+07:00] Post created successfully                     [36mparameter[0m="map[]" [36mstatus_code[0m=201
+[36mINFO[0m[2025-04-01T21:00:30+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T21:04:28+07:00] Post updated successfully                     [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T21:04:36+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
+[36mINFO[0m[2025-04-01T21:05:22+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T21:05:22+07:00] Connected to MongoDB                         

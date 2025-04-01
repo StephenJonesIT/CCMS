@@ -1,0 +1,255 @@
+basePath: /api/v1
+definitions:
+  common.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  common.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+host: 127.0.0.1:9100
+info:
+  contact: {}
+  description: List APIs of Posts Service
+  termsOfService: http://swagger.io/terms/
+  title: Posts Service API Document
+  version: "1.0"
+paths:
+  /user/posts:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new post with multiple media files (images/videos)
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post title
+        in: formData
+        name: title
+        type: string
+      - description: Post content
+        in: formData
+        name: content
+        type: string
+      - collectionFormat: multi
+        description: Post categories
+        in: formData
+        items:
+          type: string
+        name: categories
+        type: array
+      - collectionFormat: multi
+        description: Post tags
+        in: formData
+        items:
+          type: string
+        name: tags
+        type: array
+      - description: Post status
+        enum:
+        - draft
+        - pending
+        in: formData
+        name: status
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: Media files (images/videos)
+        in: formData
+        items:
+          type: file
+        name: media
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Post created successfully
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Invalid request or file upload failed
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new post with media
+      tags:
+      - user posts
+  /user/posts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a post by its ID
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Post deleted successfully
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Post ID is required
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Post not found
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      - Bearer: []
+      summary: Delete a post by ID
+      tags:
+      - user posts
+    get:
+      consumes:
+      - application/json
+      description: Get a post by its ID
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Post retrieved successfully
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Post ID is required
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      - Bearer: []
+      summary: Get a post by ID
+      tags:
+      - user posts
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update an existing post with new data including optional media
+        files
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Post title
+        in: formData
+        name: title
+        type: string
+      - description: Post content
+        in: formData
+        name: content
+        type: string
+      - collectionFormat: multi
+        description: Post categories
+        in: formData
+        items:
+          type: string
+        name: categories
+        type: array
+      - collectionFormat: multi
+        description: Post tags
+        in: formData
+        items:
+          type: string
+        name: tags
+        type: array
+      - description: Post status
+        enum:
+        - draft
+        - pending
+        in: formData
+        name: status
+        required: true
+        type: string
+      - collectionFormat: multi
+        description: Media files
+        in: formData
+        items:
+          type: file
+        name: media
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Post updated successfully
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Post not found
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      - Bearer: []
+      summary: Update a post by ID
+      tags:
+      - user posts
+schemes:
+- http
+- https
+swagger: "2.0"
