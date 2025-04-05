@@ -13,6 +13,37 @@ definitions:
       message:
         type: string
     type: object
+  models.Comment:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      like_count:
+        type: integer
+      post_id:
+        type: string
+      replies:
+        items:
+          $ref: '#/definitions/models.Reply'
+        type: array
+      status:
+        description: '"pending", "approved", "rejected"'
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.Reply:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      user_id:
+        type: string
+    type: object
 host: 127.0.0.1:9100
 info:
   contact: {}
@@ -21,6 +52,357 @@ info:
   title: Posts Service API Document
   version: "1.0"
 paths:
+  /likes/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Toggle like status for a post or comment. Returns current like
+        status after toggle.
+      parameters:
+      - description: Target ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Target type (post or comment)
+        example: post
+        in: query
+        name: type
+        required: true
+        type: string
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'Like status after toggle" { "liked": boolean }'
+          schema:
+            type: object
+        "400":
+          description: Invalid target ID or type
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid JWT token
+        "500":
+          description: Failed to toggle like
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Toggle like on a post or comment
+      tags:
+      - likes
+  /posts/{postId}/comments:
+    get:
+      description: Get all comments for a specific post. Admin can see pending comments.
+      parameters:
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: postId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of comments
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Comment'
+                  type: array
+              type: object
+        "400":
+          description: Invalid post ID
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "500":
+          description: Failed to get comments
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      summary: Get comments for a post
+      tags:
+      - comments
+    post:
+      consumes:
+      - application/json
+      description: Creates a new comment on a specified post. Requires authentication
+        (JWT token in Authorization header).
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Hex-encoded MongoDB ObjectID of the post
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: Comment content
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Comment created successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Comment'
+              type: object
+        "400":
+          description: Invalid post ID or request body
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid JWT token
+        "500":
+          description: Failed to create comment
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new comment
+      tags:
+      - comments
+  /posts/{postId}/comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing comment. Requires authentication (JWT token
+        in Authorization header).
+      parameters:
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Post ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: Comment ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439012
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Comment deleted successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid comment ID or post ID
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Comment not found
+        "500":
+          description: Failed to delete comment
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete comment by id
+      tags:
+      - comments
+    put:
+      consumes:
+      - application/json
+      description: Update an existing comment's content. Requires authentication (JWT
+        token in Authorization header).
+      parameters:
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Comment ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Post ID (hex-encoded MongoDB ObjectID)
+        in: path
+        name: postId
+        required: true
+        type: string
+      - description: Comment content
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Comment updated successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid comment ID or request body
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Comment not found
+        "500":
+          description: Failed to update comment
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update comment by id
+      tags:
+      - comments
+  /posts/{postId}/comments/{id}/moderate:
+    put:
+      consumes:
+      - application/json
+      description: Approve or reject a comment (admin role required)
+      parameters:
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Comment ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Moderation status (approved/rejected)
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Comment moderated successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid comment ID or status
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "404":
+          description: Comment not found
+        "500":
+          description: Failed to moderate comment
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Moderate a comment (admin only)
+      tags:
+      - comments
+  /posts/{postId}/comments/{id}/replies:
+    post:
+      consumes:
+      - application/json
+      description: Add a reply to an existing comment. Requires authentication (JWT
+        token in Authorization header).
+      parameters:
+      - description: Comment ID (hex-encoded MongoDB ObjectID)
+        example: 507f1f77bcf86cd799439011
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: Bearer <token>
+        description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Comment content
+        in: body
+        name: request
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Reply added successfully
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Invalid comment ID or request body
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid JWT token
+        "404":
+          description: Comment not found
+        "500":
+          description: Failed to add reply
+          schema:
+            $ref: '#/definitions/common.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Add a reply to a comment
+      tags:
+      - comments
   /user/posts:
     post:
       consumes:

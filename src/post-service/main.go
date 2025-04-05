@@ -34,12 +34,21 @@ func main(){
 
 	db := config.ConnectDB()
 	defer db.Disconnect(context.Background())
+
+	likeRepo := repositories.NewLikeRepositoryImpl(db)
+	likeService := business.NewLikeService(likeRepo)
+	likeHandler := handlers.NewLikeHandler(likeService)
+
 	postRepo := repositories.NewPostRepositoryImpl(db)
 	postService := business.NewPostService(postRepo)
 	postHandler := handlers.NewPostHandler(postService)
 
+	commentRepo := repositories.NewCommentRepositoryImpl(db)
+	commentService := business.NewCommentService(commentRepo,postRepo,likeRepo)
+	commentHandler := handlers.NewCommentHandler(commentService)
+
 	m := routes.NewMain()
-	if err := m.InitServe(postHandler); err != nil {
+	if err := m.InitServe(postHandler, commentHandler, likeHandler); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 		log.Info("Server started successfully")

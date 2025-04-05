@@ -24,7 +24,7 @@ func NewMain() *Main {
 	}
 }
 
-func (m *Main) InitServe(h *handlers.PostHandler) error {
+func (m *Main) InitServe(h *handlers.PostHandler, c *handlers.CommentHandler, l *handlers.LikeHandler) error {
 	authClient, err := client.NewAuthClient("0.0.0.0:50051", time.Second*5)
 	if err != nil {
 		log.Fatalf("Failed to create auth client: %v", err)
@@ -33,7 +33,6 @@ func (m *Main) InitServe(h *handlers.PostHandler) error {
 
 	m.router.Use(gin.Logger())
 	m.router.Use(gin.Recovery())
-
 
 	// Set up CORS middleware
 	m.router.Use(cors.New(cors.Config{
@@ -58,12 +57,21 @@ func (m *Main) InitServe(h *handlers.PostHandler) error {
 			user.Use(middlewares.AuthMiddleware(authClient))
 			SetUpUserRoutes(user, h)
 		}
+		comments := v1.Group("/posts/:postId/comments")
+		{
+			comments.Use(middlewares.AuthMiddleware(authClient))
+			comments.POST("", c.CreateComment)
+			comments.GET("", c.GetComments)
+			comments.PUT("/:id" ,c.UpdateComment)
+			comments.DELETE("/:id", c.DeleteComment)
+			comments.POST("/:id/replies", c.AddReply)
+			comments.PUT("/:id/moderate",  c.ModerateComment) // Requires admin role in middleware
+		}
 
-
-		// admin := v1.Group("/admin")
-		// {
-
-		// }
+		likes := v1.Group("/likes")
+		{
+			likes.POST(":id",l.ToggleLike)
+		}
 	}
 
 	m.router.Run(config.Config.Port)

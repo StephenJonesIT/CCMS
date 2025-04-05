@@ -65,3 +65,7 @@
 [36mINFO[0m[2025-04-01T21:04:36+07:00] Post retrieved successfully                   [36mstatus_code[0m=200
 [36mINFO[0m[2025-04-01T21:05:22+07:00] Logging configuration initialized            
 [36mINFO[0m[2025-04-01T21:05:22+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-05T00:53:03+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T00:53:04+07:00] Connected to MongoDB                         
+[36mINFO[0m[2025-04-05T00:53:55+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T00:53:55+07:00] Connected to MongoDB                         

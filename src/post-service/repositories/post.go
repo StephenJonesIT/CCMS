@@ -20,6 +20,8 @@ type PostRepository interface {
 	DeletePost(id primitive.ObjectID,) error
 	GetPostsByUser(userID uuid.UUID, page int, limit int) ([]models.Post, error)
 	GetPostsByStatus(page common.Paging, status string) ([]models.Post,error)
+	DecrementCommentCount(ctx context.Context, postID primitive.ObjectID) error
+	IncrementCommentCount(ctx context.Context ,postID primitive.ObjectID) error
 }
 
 type PostRepositoryImpl struct {
@@ -112,4 +114,41 @@ func (r *PostRepositoryImpl) GetPostsByStatus(page common.Paging, status string)
 		return nil, err
 	}
 	return posts, nil
+}
+
+// In PostRepositoryImpl add:
+func (r *PostRepositoryImpl) IncrementCommentCount(ctx context.Context, postID primitive.ObjectID) error {
+    filter := bson.M{"_id": postID}
+    update := bson.M{
+        "$inc": bson.M{"comment_count": 1},
+        "$set": bson.M{"updated_at": time.Now()},
+    }
+
+    _, err := r.collection.UpdateOne(
+        ctx,
+        filter,
+        update,
+    )
+    
+    return err
+}
+
+func (r *PostRepositoryImpl) DecrementCommentCount(ctx context.Context, postID primitive.ObjectID) error {
+    filter := bson.M{
+        "_id": postID,
+        "comment_count": bson.M{"$gt": 0}, // Only decrement if count > 0
+    }
+    
+    update := bson.M{
+        "$inc": bson.M{"comment_count": -1},
+        "$set": bson.M{"updated_at": time.Now()},
+    }
+
+    _, err := r.collection.UpdateOne(
+        ctx,
+        filter,
+        update,
+    )
+    
+    return err
 }
