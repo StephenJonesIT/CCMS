@@ -18,17 +18,11 @@ import (
 
 type UserRepository interface {
 	Login(username, password string) (*models.User, error)
-	Register(item *models.User) (err error)
+	Register(item *models.UserRegister) (err error)
 	HasPermission(userID uuid.UUID, permissionName string) bool
 	GetUserByID(userID uuid.UUID) (*models.User, error)
 	GetListUser(paging *common.Paging) ([]models.User, error)
 	ChangePassword(username, password string) error
-
-	UpdateProfile(profile *models.Profile) error
-	CreateProfile(profile *models.Profile) error
-	GetProfile(idUser string) (*models.Profile, error)
-    GetListProfile(paging *common.Paging) ([]models.Profile, error)
-	GetProfileUpdate(idUser string, idProfile int64) (*models.Profile, error)
 }
 
 type UserRepoImpl struct {
@@ -60,7 +54,7 @@ func (repo *UserRepoImpl) Login(username, password string) (*models.User, error)
 	return &user, nil
 }
 
-func (repo *UserRepoImpl) Register(user *models.User) error {
+func (repo *UserRepoImpl) Register(user *models.UserRegister) error {
 	if exists, _ := repo.usernameExists(user.UserName); exists {
 		return fmt.Errorf("username already exists")
 	}

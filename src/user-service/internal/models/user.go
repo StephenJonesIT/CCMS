@@ -16,3 +16,14 @@ type User struct {
 func(User) TableName() string {
 	return "users"
 }
+
+type UserRegister struct {
+	UserID  	uuid.UUID 	`json:"user_id,omitempty"  gorm:"column:user_id;primaryKey;type:uuid;default:gen_random_uuid()"`
+	UserName 	string 		`json:"username" gorm:"column:username"`
+	Password 	string		`json:"password" gorm:"column:password"`
+	RoleID 		uint		`json:"role_id" gorm:"column:role_id"`
+}
+
+func(UserRegister) TableName() string {
+	return User{}.TableName()
+}

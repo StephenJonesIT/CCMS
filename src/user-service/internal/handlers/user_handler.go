@@ -109,7 +109,7 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 // @Tags authentication
 // @Accept json
 // @Produce json
-// @Param user body models.User true "User registration data"
+// @Param user body models.UserRegister true "User registration data"
 // @Success 201 {object} common.Response
 // @Failure 400 {object} common.ErrorResponse
 // @Failure 500 {object} common.ErrorResponse
@@ -122,7 +122,7 @@ func(h *UserHandler) Register(ctx *gin.Context) {
         "path":     ctx.FullPath(),
         "client":   ctx.ClientIP(),
     }).Info("Request received")
-	var user models.User
+	var user models.UserRegister
 
 	if err := ctx.ShouldBindJSON(&user); err != nil{
         log.WithFields(log.Fields{

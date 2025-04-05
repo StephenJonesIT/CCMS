@@ -353,7 +353,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "$ref": "#/definitions/models.UserRegister"
                         }
                     }
                 ],
@@ -489,25 +489,11 @@ const docTemplate = `{
                 "paging": {}
             }
         },
-        "models.Role": {
-            "type": "object",
-            "properties": {
-                "role_id": {
-                    "type": "integer"
-                },
-                "role_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.User": {
+        "models.UserRegister": {
             "type": "object",
             "properties": {
                 "password": {
                     "type": "string"
-                },
-                "role": {
-                    "$ref": "#/definitions/models.Role"
                 },
                 "role_id": {
                     "type": "integer"

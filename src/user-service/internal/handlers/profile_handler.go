@@ -10,10 +10,18 @@ import (
 	"strings"
 
 	"github.com/StephenJonesIT/CCMS/src/user-service/common"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/business"
 	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
+type ProfileHandler struct {
+	service business.ProfileService
+}
+
+func NewProfileHandler(service business.ProfileService) *ProfileHandler {
+	return &ProfileHandler{service: service}
+}
 
 // @Summary Get list of profiles
 // @Description Get paginated list of profiles
@@ -28,9 +36,9 @@ import (
 // @Failure 401 {object} common.ErrorResponse
 // @Failure 500 {object} common.ErrorResponse
 // @Router /profiles [get]
-func (h *UserHandler) ListProfile(ctx *gin.Context) {
+func (h *ProfileHandler) ListProfile(ctx *gin.Context) {
 	log.WithFields(log.Fields{
-		"handler":  "UserHandler",
+		"handler":  "ProfileHandler",
 		"endpoint": "ListProfile",
 		"method":   ctx.Request.Method,
 		"path":     ctx.FullPath(),
@@ -85,9 +93,9 @@ func (h *UserHandler) ListProfile(ctx *gin.Context) {
 // @Failure 413 {object} common.ErrorResponse "File too large"
 // @Failure 500 {object} common.ErrorResponse "Internal server error"
 // @Router /profiles [post]
-func (h *UserHandler) CreateProfile(ctx *gin.Context) {
+func (h *ProfileHandler) CreateProfile(ctx *gin.Context) {
 	log.WithFields(log.Fields{
-		"handler":  "UserHandler",
+		"handler":  "ProfileHandler",
 		"endpoint": "CreateProfile",
 		"method":   ctx.Request.Method,
 		"path":     ctx.FullPath(),
@@ -159,9 +167,9 @@ func (h *UserHandler) CreateProfile(ctx *gin.Context) {
 // @Failure 413 {object} common.ErrorResponse "File too large"
 // @Failure 500 {object} common.ErrorResponse "Internal server error"
 // @Router /profiles/{id_profile} [put]
-func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
+func (h *ProfileHandler) UpdateProfile(ctx *gin.Context) {
 	log.WithFields(log.Fields{
-		"handler":  "UserHandler",
+		"handler":  "ProfileHandler",
 		"endpoint": "UpdateProfile",
 		"method":   ctx.Request.Method,
 		"path":     ctx.FullPath(),

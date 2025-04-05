@@ -12,11 +12,27 @@ import (
 
 	"github.com/StephenJonesIT/CCMS/src/user-service/common"
 	"github.com/StephenJonesIT/CCMS/src/user-service/internal/models"
+	"github.com/StephenJonesIT/CCMS/src/user-service/internal/repository"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
-func (s *UserServiceImpl) CreateProfile(profile *models.Profile) error {
+type ProfileService interface {
+	CreateProfile(profile *models.Profile) error
+	UpdateProfile(profile *models.Profile) error
+	GetProfile(idUser string) (*models.Profile, error)
+	GetListProfile(paging *common.Paging) ([]models.Profile, error)
+}
+
+type ProfileServiceImpl struct {
+	Repo repository.ProfileRepository
+}
+
+func NewProfileService(repo repository.ProfileRepository) *ProfileServiceImpl {
+	return &ProfileServiceImpl{Repo: repo}
+}
+
+func (s *ProfileServiceImpl) CreateProfile(profile *models.Profile) error {
 	if profile.FullName == "" {
 		return errors.New("fullname is required")
 	}
@@ -41,7 +57,7 @@ func (s *UserServiceImpl) CreateProfile(profile *models.Profile) error {
 	return nil
 }
 
-func (s *UserServiceImpl) UpdateProfile(profile *models.Profile) error {
+func (s *ProfileServiceImpl) UpdateProfile(profile *models.Profile) error {
 	if profile == nil {
         return errors.New("profile cannot be nil")
     }
@@ -70,7 +86,7 @@ func (s *UserServiceImpl) UpdateProfile(profile *models.Profile) error {
 	return nil
 }
 
-func (s *UserServiceImpl) GetProfile(idUSer string) (*models.Profile, error) {
+func (s *ProfileServiceImpl) GetProfile(idUSer string) (*models.Profile, error) {
 	if strings.TrimSpace(idUSer) == "" {
 		return nil, fmt.Errorf("invalid input for %s: %s", "userID", "cannot be empty")
 	}
@@ -96,7 +112,7 @@ func (s *UserServiceImpl) GetProfile(idUSer string) (*models.Profile, error) {
     return profile, nil
 }
 
-func(s *UserServiceImpl) GetListProfile(paging *common.Paging) ([]models.Profile, error) {
+func(s *ProfileServiceImpl) GetListProfile(paging *common.Paging) ([]models.Profile, error) {
 	paging.Process()
 	return s.Repo.GetListProfile(paging)
 }

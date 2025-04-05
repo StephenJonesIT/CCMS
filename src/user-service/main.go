@@ -32,7 +32,7 @@ type Main struct {
 	router *gin.Engine
 }
 
-func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) error{
+func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler, p *handlers.ProfileHandler) error{
 	m.router = gin.Default()
 	m.router.Use(cors.New(cors.Config{
         AllowOrigins:     []string{"*"}, // For development only
@@ -66,9 +66,9 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler) err
 
 			profileGroup := authGroup.Group("/profiles")
 			{
-				profileGroup.GET("",middleware.RBACMiddleware("Quản lý người dùng"),h.ListProfile)
-				profileGroup.POST("", h.CreateProfile)
-				profileGroup.PUT(":id_profile", h.UpdateProfile)
+				profileGroup.GET("",middleware.RBACMiddleware("Quản lý người dùng"),p.ListProfile)
+				profileGroup.POST("", p.CreateProfile)
+				profileGroup.PUT(":id_profile", p.UpdateProfile)
 			}
 	}
 	
@@ -105,8 +105,12 @@ func main() {
     common.InitRedis("localhost:6379", "", 0)
     
     // 5. Khởi tạo các dependency
+    profileRepo := repository.NewProfileRepository(config.DB)
+    serviceProfile := business.NewProfileService(profileRepo)
+    profileHandler := handlers.NewProfileHandler(serviceProfile)
+    // Khởi tạo User repository và service
     repoUser := repository.NewUserRepository(config.DB)
-    serviceUser := business.NewUserService(repoUser)
+    serviceUser := business.NewUserService(repoUser, profileRepo)
     handler := handlers.NewUserHandler(serviceUser)
     
     // 6. Tạo auth service TRƯỚC KHI sử dụng trong goroutine
@@ -124,7 +128,7 @@ func main() {
     go func() {
         m := Main{}
         log.Info("Starting HTTP server on ", config.Config.Port)
-        httpErr <- m.initServe(repoUser, handler)
+        httpErr <- m.initServe(repoUser, handler, profileHandler)
     }()
     
     // 9. Chạy gRPC server trong goroutine

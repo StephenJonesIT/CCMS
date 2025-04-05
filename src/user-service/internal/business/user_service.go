@@ -16,24 +16,23 @@ import (
 
 type UserService interface {
 	Login(username, password string) (*models.User, error)
-	Register(user *models.User) error
+	Register(user *models.UserRegister) error
 	HasPermission(userID uuid.UUID, permissionName string) bool
 	GetUser(userID uuid.UUID) (*models.User, error)
 	GetListUser(paging *common.Paging) ([]models.User, error)
 	ChangePassword(username, password string) error
-
-	CreateProfile(profile *models.Profile) error
-	UpdateProfile(profile *models.Profile) error
-	GetProfile(idUser string) (*models.Profile, error)
-	GetListProfile(paging *common.Paging) ([]models.Profile, error)
 }
 
 type UserServiceImpl struct {
-	Repo repository.UserRepository
+	userRepo repository.UserRepository
+	profileRepo repository.ProfileRepository
 }
 
-func NewUserService(repo repository.UserRepository) *UserServiceImpl {
-	return &UserServiceImpl{Repo: repo}
+func NewUserService(userRepo repository.UserRepository, profileRepo repository.ProfileRepository) *UserServiceImpl {
+	return &UserServiceImpl{
+		userRepo: userRepo,
+		profileRepo: profileRepo,
+	}
 }
 
 // Login handles user authentication
@@ -42,7 +41,7 @@ func (s *UserServiceImpl) Login(username, password string) (*models.User, error)
 		return nil, errors.New("username and password are required")
 	}
 
-	user, err := s.Repo.Login(username, password)
+	user, err := s.userRepo.Login(username, password)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +50,7 @@ func (s *UserServiceImpl) Login(username, password string) (*models.User, error)
 }
 
 // Register handles new user registration
-func (s *UserServiceImpl) Register(user *models.User) error {
+func (s *UserServiceImpl) Register(user *models.UserRegister) error {
 	// Validate input
 	if user.UserName == "" {
 		return errors.New("username is required")
@@ -66,17 +65,27 @@ func (s *UserServiceImpl) Register(user *models.User) error {
 	if user.RoleID == 0 {
 		user.RoleID = 1 // Giá trị mặc định
 	}
-	return s.Repo.Register(user)
+
+	if err := s.userRepo.Register(user); err != nil {
+		return errors.New("failed to register user: " + err.Error())
+	}
+
+	if err := s.profileRepo.CreateProfile(&models.Profile{
+		UserID: user.UserID,
+	}); err != nil {
+		return errors.New("failed to create profile: " + err.Error())
+	}
+	return nil
 }
 
 // HasPermission checks if user has specific permission
 func (s *UserServiceImpl) HasPermission(userID uuid.UUID, permissionName string) bool {
-	return s.Repo.HasPermission(userID, permissionName)
+	return s.userRepo.HasPermission(userID, permissionName)
 }
 
 // GetUserProfile retrieves user profile (without sensitive data)
 func (s *UserServiceImpl) GetUser(userID uuid.UUID) (*models.User, error) {
-	user, err := s.Repo.GetUserByID(userID)
+	user, err := s.userRepo.GetUserByID(userID)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +95,7 @@ func (s *UserServiceImpl) GetUser(userID uuid.UUID) (*models.User, error) {
 
 func (s *UserServiceImpl) GetListUser(paging *common.Paging) ([]models.User, error){
 	paging.Process()
-	return s.Repo.GetListUser(paging)
+	return s.userRepo.GetListUser(paging)
 }
 
 func (s *UserServiceImpl) ChangePassword(username, password string) error {
@@ -102,6 +111,6 @@ func (s *UserServiceImpl) ChangePassword(username, password string) error {
 		return errors.New("password must be at least 8 characters")
 	}
 
-	return s.Repo.ChangePassword(username, password)
+	return s.userRepo.ChangePassword(username, password)
 }
 

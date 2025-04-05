@@ -29,19 +29,10 @@ definitions:
       data: {}
       paging: {}
     type: object
-  models.Role:
-    properties:
-      role_id:
-        type: integer
-      role_name:
-        type: string
-    type: object
-  models.User:
+  models.UserRegister:
     properties:
       password:
         type: string
-      role:
-        $ref: '#/definitions/models.Role'
       role_id:
         type: integer
       user_id:
@@ -278,7 +269,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/models.UserRegister'
       produces:
       - application/json
       responses:

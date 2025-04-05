@@ -101,3 +101,95 @@
 [36mINFO[0m[2025-03-31T17:19:05+07:00] Starting HTTP server on :9000                
 [36mINFO[0m[2025-03-31T17:19:05+07:00] gRPC auth server listening at [::]:50051     
 [36mINFO[0m[2025-03-31T17:19:05+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:20:54+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T17:20:54+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:20:54+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T17:20:54+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:35:16+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T17:35:16+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:35:16+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T17:35:16+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:58:25+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T17:58:25+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T17:58:25+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T17:58:25+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T19:24:19+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-03-31T19:24:19+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-03-31T20:27:19+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-03-31T20:27:19+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-03-31T20:27:19+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-03-31T20:27:19+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T15:00:03+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T15:00:04+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T15:00:04+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-01T15:00:04+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T15:14:34+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-01T15:14:34+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-01T20:29:48+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:29:48+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T20:29:48+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-01T20:29:48+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T20:39:02+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-01T20:39:02+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T20:39:02+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-01T20:39:02+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-01T20:39:26+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-01T20:39:26+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-02T21:36:40+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-02T21:36:40+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-02T21:36:40+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-02T21:36:40+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-02T21:40:45+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-02T21:40:45+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-02T21:40:46+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-02T21:40:46+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-03T09:13:44+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-03T09:13:44+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-03T09:13:44+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-03T09:13:44+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:04:03+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-04T23:04:03+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:04:03+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-04T23:04:03+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:04:45+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-04T23:04:45+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:04:45+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-04T23:04:45+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:10:28+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-04T23:10:28+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[31mERRO[0m[2025-04-04T23:11:30+07:00] Failed to follow user                         [31mbody[0m="&{0xc000122210 <nil> <nil> false true {0 0} true false false 0x532240}" [31merror[0m="failed to update follower count: unsupported data type: &[]: Table not set, please set it like: db.Model(&user) or db.Table(\"users\")"
+[36mINFO[0m[2025-04-04T23:17:59+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-04T23:17:59+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:17:59+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-04T23:17:59+07:00] Starting HTTP server on :9000                
+[31mERRO[0m[2025-04-04T23:18:05+07:00] Failed to follow user                         [31mbody[0m="&{0xc0000095d8 <nil> <nil> false true {0 0} true false false 0x10b2240}" [31merror[0m="failed to follow user: ERROR: duplicate key value violates unique constraint \"follows_pkey\" (SQLSTATE 23505)"
+[31mERRO[0m[2025-04-04T23:21:55+07:00] Failed to follow user                         [31mbody[0m="&{0xc000008228 <nil> <nil> false true {0 0} true false false 0x10b2240}" [31merror[0m="failed to update follower count: failed to increment follower count: unsupported data type: &[]: Table not set, please set it like: db.Model(&user) or db.Table(\"users\")"
+[36mINFO[0m[2025-04-04T23:25:45+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-04T23:25:45+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:25:45+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-04T23:25:45+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-04T23:25:53+07:00] User followed successfully                    [36mfollowee_id[0m=b80e6b44-63d1-4ffc-b5a5-bcb81f2279a1 [36mfollower_id[0m=4c1fca76-75ff-408d-8b8c-bb6642fa3bfc
+[36mINFO[0m[2025-04-04T23:27:57+07:00] Retrieved followers successfully              [36mfollowers[0m="[{12345 Pham Thi Nhung sang.it.la@gmail.com software developer. /uploads/hinhb10_20250327_183117.png 4c1fca76-75ff-408d-8b8c-bb6642fa3bfc [] 0 1}]" [36muser_id[0m=b80e6b44-63d1-4ffc-b5a5-bcb81f2279a1
+[36mINFO[0m[2025-04-04T23:27:58+07:00] Retrieved followers successfully              [36mfollowers[0m="[{12345 Pham Thi Nhung sang.it.la@gmail.com software developer. /uploads/hinhb10_20250327_183117.png 4c1fca76-75ff-408d-8b8c-bb6642fa3bfc [] 0 1}]" [36muser_id[0m=b80e6b44-63d1-4ffc-b5a5-bcb81f2279a1
+[36mINFO[0m[2025-04-05T09:20:30+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T09:20:30+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:20:30+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T09:20:30+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:27:46+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T09:27:46+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:27:46+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T09:27:46+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:30:44+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T09:30:44+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:30:44+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T09:30:44+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T09:31:20+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=Register [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/register
+[33mWARN[0m[2025-04-05T09:31:20+07:00] Invalid user parameters                       [33merror[0m="invalid UUID length: 0" [33mparameters[0m="map[]" [33mstatus_code[0m=400
+[36mINFO[0m[2025-04-05T09:32:15+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=Register [36mhandler[0m=UserHandler [36mmethod[0m=POST [36mpath[0m=/api/v1/register
+[36mINFO[0m[2025-04-05T09:32:15+07:00] User registered successfully                  [36mstatus[0m=200 [36muser_id[0m=8b1783b9-0b48-44e6-a8b7-4a9c7ec16a47 [36musername[0m=user2
+[36mINFO[0m[2025-04-05T09:33:19+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[33mWARN[0m[2025-04-05T09:33:19+07:00] Login failed - invalid password               [33mstatus[0m=400 [33musername[0m=admin
+[36mINFO[0m[2025-04-05T09:33:28+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-05T09:33:28+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-05T09:33:45+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListProfile [36mhandler[0m=ProfileHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/profiles
+[36mINFO[0m[2025-04-05T09:33:45+07:00] Successfully processed request                [36mreturned_records[0m=3 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=3
