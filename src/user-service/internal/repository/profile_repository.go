@@ -97,13 +97,13 @@ func (repo *ProfileRepositoryImpl) GetProfileUpdate(idUser string, idProfile int
 func (repo *ProfileRepositoryImpl) IncrementFollowersCount(ctx context.Context, userID uuid.UUID) error {
 	return repo.DB.WithContext(ctx).Table(models.Profile{}.TableName()).
 		Where("user_id = ?", userID).
-		UpdateColumn("follower_count", gorm.Expr("followers_count + 1")).Error
+		UpdateColumn("follower_count", gorm.Expr("follower_count + 1")).Error
 }
 
 func (repo *ProfileRepositoryImpl) DecrementFollowersCount(ctx context.Context, userID uuid.UUID) error {
 	return repo.DB.WithContext(ctx).Table(models.Profile{}.TableName()).
 		Where("user_id = ?", userID).
-		UpdateColumn("followers_count", gorm.Expr("followers_count - 1")).Error
+		UpdateColumn("follower_count", gorm.Expr("follower_count - 1")).Error
 }
 
 func (repo *ProfileRepositoryImpl) IncrementFolloweeCount(ctx context.Context, userID uuid.UUID) error {

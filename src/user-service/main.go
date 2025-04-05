@@ -32,7 +32,12 @@ type Main struct {
 	router *gin.Engine
 }
 
-func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler, p *handlers.ProfileHandler) error{
+func (m *Main) initServe(
+    r *repository.UserRepoImpl,
+    h *handlers.UserHandler, 
+    p *handlers.ProfileHandler,
+    f *handlers.FollowHandler,
+    ) error{
 	m.router = gin.Default()
 	m.router.Use(cors.New(cors.Config{
         AllowOrigins:     []string{"*"}, // For development only
@@ -70,6 +75,14 @@ func (m *Main) initServe(r *repository.UserRepoImpl,h *handlers.UserHandler, p *
 				profileGroup.POST("", p.CreateProfile)
 				profileGroup.PUT(":id_profile", p.UpdateProfile)
 			}
+
+            followGroup := authGroup.Group("")
+            {
+                followGroup.POST("/follow", f.Follow)
+                followGroup.POST("/unfollow", f.Unfollow)
+                followGroup.GET("/followees/:id", f.GetFollowees)
+                followGroup.GET("/followers/:id", f.GetFollowers)
+            }
 	}
 	
 
@@ -108,6 +121,10 @@ func main() {
     profileRepo := repository.NewProfileRepository(config.DB)
     serviceProfile := business.NewProfileService(profileRepo)
     profileHandler := handlers.NewProfileHandler(serviceProfile)
+
+    followRepo := repository.NewFollowRepository(config.DB)
+    followService := business.NewFollowService(profileRepo, followRepo)
+    followHandler := handlers.NewFollowHandler(followService)
     // Khởi tạo User repository và service
     repoUser := repository.NewUserRepository(config.DB)
     serviceUser := business.NewUserService(repoUser, profileRepo)
@@ -128,7 +145,7 @@ func main() {
     go func() {
         m := Main{}
         log.Info("Starting HTTP server on ", config.Config.Port)
-        httpErr <- m.initServe(repoUser, handler, profileHandler)
+        httpErr <- m.initServe(repoUser, handler, profileHandler, followHandler)
     }()
     
     // 9. Chạy gRPC server trong goroutine

@@ -193,3 +193,26 @@
 [36mINFO[0m[2025-04-05T09:33:28+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
 [36mINFO[0m[2025-04-05T09:33:45+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=ListProfile [36mhandler[0m=ProfileHandler [36mmethod[0m=GET [36mpath[0m=/api/v1/profiles
 [36mINFO[0m[2025-04-05T09:33:45+07:00] Successfully processed request                [36mreturned_records[0m=3 [36mstatus_code[0m=200 [36mtotal_pages[0m=1 [36mtotal_records[0m=3
+[36mINFO[0m[2025-04-05T12:37:52+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T12:37:52+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T12:37:52+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T12:37:52+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:37:55+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T13:37:55+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:37:55+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T13:37:55+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:38:47+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-05T13:38:47+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-05T13:42:21+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T13:42:21+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:42:21+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T13:42:21+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:44:14+07:00] Login request received                        [36mclientIP[0m=127.0.0.1 [36mendpoint[0m=Login [36mhandler[0m=UserHandler [36mmethod[0m=POST
+[36mINFO[0m[2025-04-05T13:44:14+07:00] Login successful                              [36mstatus[0m=200 [36muser_id[0m=9e01926d-6c6f-4d89-bcea-f4010c3d5ff5 [36musername[0m=admin
+[36mINFO[0m[2025-04-05T13:45:19+07:00] Logging configuration initialized            
+[36mINFO[0m[2025-04-05T13:45:19+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:45:19+07:00] gRPC auth server listening at [::]:50051     
+[36mINFO[0m[2025-04-05T13:45:19+07:00] Starting HTTP server on :9000                
+[36mINFO[0m[2025-04-05T13:45:58+07:00] Retrieve followees successfully              
+[36mINFO[0m[2025-04-05T13:46:28+07:00] Request received                              [36mclient[0m=127.0.0.1 [36mendpoint[0m=UnFollow [36mhandler[0m=FollowHandler [36mmethod[0m=GET [36mpath[0m="/api/v1/followers/:id"
+[36mINFO[0m[2025-04-05T13:46:28+07:00] Retrieve followers successfully              
